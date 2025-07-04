@@ -92,7 +92,7 @@
     <!-- Listings Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($listings as $listing)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+            <div class="listing-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
                 <!-- Listing Header -->
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-3">
@@ -115,7 +115,7 @@
                     
                     <!-- Price and Views -->
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-bold text-green-600">${{ number_format($listing->price, 2) }}</span>
+                        <span class="text-2xl font-bold text-green-600 price-display">${{ number_format($listing->price, 2) }}</span>
                         <span class="text-xs text-gray-500">
                             <i class="fas fa-eye mr-1"></i>{{ $listing->views }} views
                         </span>
@@ -133,10 +133,25 @@
                             </div>
                         </div>
                         
-                        <a href="{{ route('listings.show', $listing) }}" 
-                           class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 text-sm">
-                            View Details
-                        </a>
+                        <div class="flex items-center space-x-2">
+                            @auth
+                                @if(auth()->id() !== $listing->user_id && $listing->status === 'active' && $listing->type === 'sell')
+                                    <form action="{{ route('cart.store') }}" method="POST" class="inline add-to-cart-form">
+                                        @csrf
+                                        <input type="hidden" name="listing_id" value="{{ $listing->id }}">
+                                        <button type="submit" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-md text-sm transition duration-200">
+                                            <i class="fas fa-shopping-cart mr-1"></i>
+                                            <span class="add-to-cart-text">Cart</span>
+                                        </button>
+                                    </form>
+                                @endif
+                            @endauth
+                            
+                            <a href="{{ route('listings.show', $listing) }}" 
+                               class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 text-sm">
+                                View Details
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,4 +182,123 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartForms = document.querySelectorAll('.add-to-cart-form');
+    
+    addToCartForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const button = this.querySelector('button[type="submit"]');
+            const textSpan = button.querySelector('.add-to-cart-text');
+            
+            // Show loading state
+            button.disabled = true;
+            textSpan.textContent = 'Adding...';
+            
+            // Send AJAX request
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: new FormData(this)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    showNotification('Item added to cart!', 'success');
+                    
+                    // Update cart count in navbar
+                    updateCartCount();
+                    
+                    // Change button text temporarily
+                    textSpan.textContent = 'Added!';
+                    button.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+                    button.classList.add('bg-green-500', 'hover:bg-green-600', 'text-white');
+                    
+                    setTimeout(() => {
+                        textSpan.textContent = 'Cart';
+                        button.classList.remove('bg-green-500', 'hover:bg-green-600', 'text-white');
+                        button.classList.add('bg-gray-200', 'hover:bg-gray-300');
+                    }, 2000);
+                } else {
+                    showNotification(data.message || 'Failed to add item to cart', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                button.disabled = false;
+                if (textSpan.textContent === 'Adding...') {
+                    textSpan.textContent = 'Cart';
+                }
+            });
+        });
+    });
+    
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${
+            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`;
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <span class="mr-3">${type === 'success' ? '✅' : '❌'}</span>
+                <span>${message}</span>
+                <button class="ml-4 hover:opacity-75" onclick="this.parentElement.parentElement.remove()">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        `;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 3000);
+    }
+    
+    function updateCartCount() {
+        fetch('{{ route("cart.count") }}')
+            .then(response => response.json())
+            .then(data => {
+                const cartBadge = document.querySelector('.cart-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.count;
+                    cartBadge.style.display = data.count > 0 ? 'inline' : 'none';
+                }
+            })
+            .catch(error => console.error('Error updating cart count:', error));
+    }
+});
+</script>
+@endpush
 @endsection

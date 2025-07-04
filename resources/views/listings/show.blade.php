@@ -102,9 +102,20 @@
                             <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium">
                                 Buy Now
                             </button>
-                            <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg font-medium">
-                                Add to Cart
-                            </button>
+                            <form action="{{ route('cart.store') }}" method="POST" class="add-to-cart-form">
+                                @csrf
+                                <input type="hidden" name="listing_id" value="{{ $listing->id }}">
+                                <button type="submit" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg font-medium">
+                                    <span class="add-to-cart-text">Add to Cart</span>
+                                    <span class="add-to-cart-loading hidden">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-800 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Adding...
+                                    </span>
+                                </button>
+                            </form>
                             <button class="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-4 rounded-lg">
                                 ❤️ Add to Favorites
                             </button>
@@ -197,4 +208,111 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartForm = document.querySelector('.add-to-cart-form');
+    
+    if (addToCartForm) {
+        addToCartForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            console.log('Form submitted:', this.action);
+            
+            const button = this.querySelector('button[type="submit"]');
+            const textSpan = button.querySelector('.add-to-cart-text');
+            const loadingSpan = button.querySelector('.add-to-cart-loading');
+            
+            // Show loading state
+            button.disabled = true;
+            textSpan.classList.add('hidden');
+            loadingSpan.classList.remove('hidden');
+            
+            // Send AJAX request
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: new FormData(this)
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    // Show success message
+                    showNotification('Item added to cart!', 'success');
+                    
+                    // Update cart count in navbar
+                    updateCartCount();
+                    
+                    // Change button text temporarily
+                    textSpan.textContent = 'Added!';
+                    setTimeout(() => {
+                        textSpan.textContent = 'Add to Cart';
+                    }, 2000);
+                } else {
+                    showNotification(data.message || 'Failed to add item to cart', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                button.disabled = false;
+                textSpan.classList.remove('hidden');
+                loadingSpan.classList.add('hidden');
+            });
+        });
+    }
+    
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${
+            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`;
+        notification.textContent = message;
+        
+        // Add to page
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateY(0)';
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+    
+    function updateCartCount() {
+        fetch('{{ route("cart.count") }}')
+            .then(response => response.json())
+            .then(data => {
+                const cartBadge = document.querySelector('.cart-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.count;
+                    cartBadge.style.display = data.count > 0 ? 'inline' : 'none';
+                }
+            })
+            .catch(error => console.error('Error updating cart count:', error));
+    }
+});
+</script>
+@endpush
 @endsection

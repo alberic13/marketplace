@@ -6,6 +6,7 @@
     <title>@yield('title', 'Marketplace Game')</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ asset('css/cart.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-gray-100">
@@ -54,6 +55,14 @@
                 <!-- User Menu -->
                 <div class="flex items-center space-x-4">
                     @auth
+                        <!-- Cart Icon -->
+                        <a href="{{ route('cart.index') }}" class="relative text-white hover:text-blue-200">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span class="cart-count absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center {{ auth()->user()->cart_count > 0 ? '' : 'hidden' }}">
+                                {{ auth()->user()->cart_count }}
+                            </span>
+                        </a>
+                        
                         <div class="relative">
                             <button class="flex text-sm rounded-full text-white focus:outline-none">
                                 <i class="fas fa-user-circle text-2xl"></i>
@@ -61,6 +70,12 @@
                             <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                                 <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                                 <a href="{{ route('my-listings.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Listings</a>
+                                <a href="{{ route('cart.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-shopping-cart mr-2"></i>Shopping Cart
+                                </a>
+                                <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-receipt mr-2"></i>My Orders
+                                </a>
                                 @if(auth()->user()->role === 'admin')
                                     <hr class="my-1">
                                     <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-medium">
@@ -165,5 +180,7 @@
             }
         });
     </script>
+    
+    @stack('scripts')
 </body>
 </html>

@@ -6,6 +6,8 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -26,6 +28,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    
+    // Cart Management
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
+    Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::delete('/cart', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
+    
+    // Order Management
+    Route::get('/checkout', [OrderController::class, 'showCheckout'])->name('checkout.index');
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout.process');
+    Route::get('/orders', [OrderController::class, 'orders'])->name('orders.index');
     
     // Listing Management
     Route::get('/my-listings', [ListingController::class, 'myListings'])->name('my-listings.index');

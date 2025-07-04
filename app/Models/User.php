@@ -93,4 +93,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function getCartCountAttribute()
+    {
+        return $this->cartItems()->count();
+    }
+
+    public function getCartTotalAttribute()
+    {
+        return $this->cartItems()->sum('price');
+    }
 }

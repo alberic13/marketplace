@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class GameController extends Controller
+class GameController_new extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,7 +35,7 @@ class GameController extends Controller
         $games = $query->paginate(12);
         $categories = Category::where('is_active', true)->get();
 
-        return Inertia::render('Games/Index', [
+        return view('games.index', [
             'games' => $games,
             'categories' => $categories,
             'filters' => $request->only(['category', 'platform', 'search'])
@@ -71,7 +70,7 @@ class GameController extends Controller
             ->latest()
             ->paginate(10);
 
-        return Inertia::render('Games/Show', [
+        return view('games.show', [
             'game' => $game,
             'listings' => $listings
         ]);
