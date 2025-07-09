@@ -11,9 +11,15 @@
     </div>
 
     <!-- Filters -->
+<<<<<<< HEAD
     <div class="bg-white rounded-lg shadow-md p-8 mb-8">
         <form method="GET" action="{{ route('games.index') }}" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+=======
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <form method="GET" action="{{ route('games.index') }}" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 <!-- Search -->
                 <div>
                     <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
@@ -61,6 +67,7 @@
     </div>
 
     <!-- Games Grid -->
+<<<<<<< HEAD
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         @forelse($games as $game)
             <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition duration-200 relative group">
@@ -80,19 +87,45 @@
                         <span class="absolute top-2 right-2 bg-yellow-400 text-white text-xs px-2 py-1 rounded-full font-semibold">Popular</span>
                     @endif
                 </div>
+=======
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        @forelse($games as $game)
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+                <!-- Game Image -->
+                <div class="h-48 bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                    @if($game->cover_image)
+                        <img src="{{ $game->cover_image }}" alt="{{ $game->title }}" class="w-full h-full object-cover">
+                    @else
+                        <i class="fas fa-gamepad text-6xl text-white opacity-50"></i>
+                    @endif
+                </div>
+
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 <!-- Game Info -->
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-sm text-blue-600 font-semibold">{{ $game->category->name }}</span>
                         <span class="text-sm text-gray-500">{{ $game->platform }}</span>
                     </div>
+<<<<<<< HEAD
                     <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $game->title }}</h3>
+=======
+                    
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $game->title }}</h3>
+                    
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                     @if($game->developer)
                         <p class="text-sm text-gray-600 mb-2">
                             <i class="fas fa-user-cog mr-1"></i>{{ $game->developer }}
                         </p>
                     @endif
+<<<<<<< HEAD
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($game->description, 100) }}</p>
+=======
+
+                    <p class="text-gray-600 text-sm mb-4">{{ Str::limit($game->description, 100) }}</p>
+                    
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                     <div class="flex items-center justify-between">
                         @if($game->base_price)
                             <span class="text-2xl font-bold text-green-600">${{ number_format($game->base_price, 2) }}</span>

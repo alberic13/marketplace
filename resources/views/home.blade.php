@@ -3,17 +3,26 @@
 @section('title', 'Home - GameMarket')
 
 @section('content')
+<<<<<<< HEAD
 <!-- Hero Section with SVG Wave -->
 <div class="relative bg-gradient-to-r from-blue-600 to-purple-600 dark:from-zinc-900 dark:to-zinc-800 text-white overflow-hidden w-full">
     <div class="w-full px-4 py-24 md:px-8">
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+=======
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-24">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 Welcome to GameMarket
             </h1>
             <p class="text-xl md:text-2xl mb-8 opacity-90">
                 Your ultimate destination for buying and selling games
             </p>
             <div class="space-x-4">
+<<<<<<< HEAD
                 <a href="{{ route('listings.index') }}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 shadow-lg transition duration-200">
                     Browse Listings
                 </a>
@@ -23,16 +32,30 @@
                     </a>
                 @else
                     <a href="{{ route('register') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 shadow-lg transition duration-200">
+=======
+                <a href="{{ route('listings.index') }}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">
+                    Browse Listings
+                </a>
+                @auth
+                    <a href="{{ route('my-listings.create') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-200">
+                        Sell Your Game
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-200">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                         Join Now
                     </a>
                 @endauth
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <!-- SVG Wave -->
     <svg class="absolute bottom-0 left-0 w-full" height="80" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#f3f4f6" fill-opacity="1" d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,53.3C672,43,768,21,864,16C960,11,1056,21,1152,32C1248,43,1344,53,1392,58.7L1440,64L1440,80L1392,80C1344,80,1248,80,1152,80C1056,80,960,80,864,80C768,80,672,80,576,80C480,80,384,80,288,80C192,80,96,80,48,80L0,80Z"></path>
     </svg>
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 </div>
 
 @guest
@@ -83,6 +106,7 @@
 </div>
 @endguest
 
+<<<<<<< HEAD
 <!-- Categories Section with Icons -->
 <div class="w-full px-4 py-16 md:px-8 bg-background dark:bg-[#18181b]">
     <div class="text-center mb-12">
@@ -98,18 +122,43 @@
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ $category->name }}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">{{ Str::limit($category->description, 50) }}</p>
+=======
+<!-- Categories Section -->
+<div class="max-w-7xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Browse by Category</h2>
+        <p class="text-lg text-gray-600">Discover games from your favorite genres</p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
+        @foreach($categories as $category)
+            <a href="{{ route('categories.show', $category) }}" class="group">
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition duration-200 transform group-hover:scale-105">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition duration-200">
+                        <i class="fas fa-gamepad text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $category->name }}</h3>
+                    <p class="text-sm text-gray-600">{{ Str::limit($category->description, 50) }}</p>
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 </div>
             </a>
         @endforeach
     </div>
+<<<<<<< HEAD
     <div class="text-center mt-8">
         <a href="{{ route('categories.index') }}" class="text-blue-600 dark:text-blue-300 hover:text-blue-800 font-semibold">
+=======
+    
+    <div class="text-center mt-8">
+        <a href="{{ route('categories.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
             View All Categories <i class="fas fa-arrow-right ml-1"></i>
         </a>
     </div>
 </div>
 
 <!-- Featured Games Section -->
+<<<<<<< HEAD
 <div class="bg-gray-50 dark:bg-zinc-800 py-16 w-full px-4 md:px-8">
     <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Featured Games</h2>
@@ -150,24 +199,80 @@
         <a href="{{ route('games.index') }}" class="text-blue-600 dark:text-blue-300 hover:text-blue-800 font-semibold">
             View All Games <i class="fas fa-arrow-right ml-1"></i>
         </a>
+=======
+<div class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Featured Games</h2>
+            <p class="text-lg text-gray-600">Popular games in our marketplace</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach($featuredGames as $game)
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+                    <div class="h-48 bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
+                        @if($game->cover_image)
+                            <img src="{{ $game->cover_image }}" alt="{{ $game->title }}" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-gamepad text-6xl text-white opacity-50"></i>
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-blue-600 font-semibold">{{ $game->category->name }}</span>
+                            <span class="text-sm text-gray-500">{{ $game->platform }}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $game->title }}</h3>
+                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit($game->description, 100) }}</p>
+                        <div class="flex items-center justify-between">
+                            @if($game->base_price)
+                                <span class="text-2xl font-bold text-green-600">${{ number_format($game->base_price, 2) }}</span>
+                            @endif
+                            <a href="{{ route('games.show', $game) }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                                View Details <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        
+        <div class="text-center mt-8">
+            <a href="{{ route('games.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                View All Games <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     </div>
 </div>
 
 <!-- Recent Listings Section -->
+<<<<<<< HEAD
 <div class="w-full px-4 py-16 md:px-8 bg-background dark:bg-[#18181b]">
     <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Recent Listings</h2>
         <p class="text-lg text-gray-600 dark:text-gray-300">Latest games available for sale</p>
+=======
+<div class="max-w-7xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Recent Listings</h2>
+        <p class="text-lg text-gray-600">Latest games available for sale</p>
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         @foreach($recentListings as $listing)
+<<<<<<< HEAD
             <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+=======
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 <div class="h-32 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
                     <i class="fas fa-gamepad text-3xl text-white opacity-50"></i>
                 </div>
                 <div class="p-4">
                     <div class="flex items-center justify-between mb-2">
+<<<<<<< HEAD
                         <span class="text-xs bg-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-100 text-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-800 dark:bg-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-900 dark:text-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-300 px-2 py-1 rounded-full font-semibold">
                             {{ ucfirst($listing->type) }}
                         </span>
@@ -178,6 +283,18 @@
                     <div class="flex items-center justify-between">
                         <span class="text-xl font-bold text-green-600 dark:text-green-400">${{ number_format((float)$listing->price, 2) }}</span>
                         <a href="{{ route('listings.show', $listing) }}" class="text-blue-600 dark:text-blue-300 hover:text-blue-800 text-sm font-semibold">
+=======
+                        <span class="text-xs bg-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-100 text-{{ $listing->type === 'sell' ? 'green' : 'blue' }}-800 px-2 py-1 rounded-full font-semibold">
+                            {{ ucfirst($listing->type) }}
+                        </span>
+                        <span class="text-xs text-gray-500">{{ ucfirst($listing->condition) }}</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ Str::limit($listing->title, 30) }}</h3>
+                    <p class="text-sm text-gray-600 mb-2">{{ $listing->game->title }}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-green-600">${{ number_format((float)$listing->price, 2) }}</span>
+                        <a href="{{ route('listings.show', $listing) }}" class="text-blue-600 hover:text-blue-800 text-sm font-semibold">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                             View <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
@@ -187,15 +304,24 @@
     </div>
     
     <div class="text-center mt-8">
+<<<<<<< HEAD
         <a href="{{ route('listings.index') }}" class="text-blue-600 dark:text-blue-300 hover:text-blue-800 font-semibold">
+=======
+        <a href="{{ route('listings.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
             View All Listings <i class="fas fa-arrow-right ml-1"></i>
         </a>
     </div>
 </div>
 
 <!-- Call to Action Section -->
+<<<<<<< HEAD
 <div class="bg-blue-600 dark:bg-blue-900 text-white py-16 w-full px-4 md:px-8">
     <div class="text-center">
+=======
+<div class="bg-blue-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
         <h2 class="text-3xl font-bold mb-4">Ready to Start Trading?</h2>
         <p class="text-xl mb-8 opacity-90">Join thousands of gamers buying and selling games on our platform</p>
         <div class="space-x-4">
@@ -214,6 +340,7 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
 <!-- Testimonials/Trust Section -->
 <div class="bg-white dark:bg-zinc-900 py-16 w-full px-4 md:px-8">
@@ -238,4 +365,6 @@
         </div>
     </div>
 </div>
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 @endsection

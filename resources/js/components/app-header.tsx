@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { ThemeToggle } from '@/components/theme-toggle';
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Icon } from '@/components/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -30,6 +33,7 @@ const rightNavItems: NavItem[] = [
         href: 'https://github.com/laravel/react-starter-kit',
         icon: Folder,
     },
+<<<<<<< HEAD
 ];
 
 export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[] }) {
@@ -37,6 +41,25 @@ export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[]
     const getInitials = useInitials();
     const activeItemStyles = 'font-medium text-primary';
 
+=======
+    {
+        title: 'Documentation',
+        href: 'https://laravel.com/docs/starter-kits#react',
+        icon: BookOpen,
+    },
+];
+
+const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
+
+interface AppHeaderProps {
+    breadcrumbs?: BreadcrumbItem[];
+}
+
+export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
+    const page = usePage<SharedData>();
+    const { auth } = page.props;
+    const getInitials = useInitials();
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     return (
         <>
             <div className="border-b border-sidebar-border/80">
@@ -99,14 +122,22 @@ export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[]
                                             href={item.href}
                                             className={cn(
                                                 navigationMenuTriggerStyle(),
+<<<<<<< HEAD
                                                 url === item.href && activeItemStyles,
+=======
+                                                page.url === item.href && activeItemStyles,
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                                                 'h-9 cursor-pointer px-3',
                                             )}
                                         >
                                             {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
                                             {item.title}
                                         </Link>
+<<<<<<< HEAD
                                         {url === item.href && (
+=======
+                                        {page.url === item.href && (
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}
                                     </NavigationMenuItem>
@@ -143,6 +174,7 @@ export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[]
                                 ))}
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div className="flex items-center gap-4">
                             <ThemeToggle />
                             <DropdownMenu>
@@ -161,6 +193,23 @@ export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[]
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
+=======
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="size-10 rounded-full p-1">
+                                    <Avatar className="size-8 overflow-hidden rounded-full">
+                                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                            {getInitials(auth.user.name)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56" align="end">
+                                <UserMenuContent user={auth.user} />
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                     </div>
                 </div>
             </div>

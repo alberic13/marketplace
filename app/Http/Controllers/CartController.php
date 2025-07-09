@@ -105,18 +105,30 @@ class CartController extends Controller
     /**
      * Update cart item quantity
      */
+<<<<<<< HEAD
     public function update(Request $request, Cart $cart)
+=======
+    public function update(Request $request, Cart $cartItem)
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     {
         $request->validate([
             'quantity' => 'required|integer|min:1|max:10'
         ]);
 
         // Verify cart item belongs to current user
+<<<<<<< HEAD
         if ($cart->user_id !== auth()->id()) {
             abort(403);
         }
 
         $cart->update([
+=======
+        if ($cartItem->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $cartItem->update([
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
             'quantity' => $request->quantity
         ]);
 
@@ -126,6 +138,7 @@ class CartController extends Controller
     /**
      * Remove item from cart
      */
+<<<<<<< HEAD
     public function destroy(Cart $cart)
     {
         // Verify cart item belongs to current user
@@ -134,6 +147,16 @@ class CartController extends Controller
         }
 
         $cart->delete();
+=======
+    public function destroy(Cart $cartItem)
+    {
+        // Verify cart item belongs to current user
+        if ($cartItem->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $cartItem->delete();
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 
         return back()->with('success', 'Item removed from cart.');
     }

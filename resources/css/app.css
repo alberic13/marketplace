@@ -148,6 +148,7 @@
     --sidebar-ring: oklch(0.439 0 0);
 }
 
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -160,6 +161,8 @@
   }
 }
 
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 @layer base {
     * {
         @apply border-border;

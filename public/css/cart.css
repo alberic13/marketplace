@@ -54,8 +54,11 @@
     }
 }
 
+<<<<<<< HEAD
 .cart-count:empty, .cart-count.hidden { display: none !important; }
 
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
 /* Notification Styles */
 .toast-notification {
     backdrop-filter: blur(10px);

@@ -9,7 +9,11 @@
     <link href="{{ asset('css/cart.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+<<<<<<< HEAD
 <body>
+=======
+<body class="bg-gray-100">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     <!-- Navigation -->
     <nav class="bg-blue-600 shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
@@ -54,12 +58,15 @@
 
                 <!-- User Menu -->
                 <div class="flex items-center space-x-4">
+<<<<<<< HEAD
                     <!-- Dark Mode Toggle Button -->
                     <button id="dark-mode-toggle" class="text-white hover:text-yellow-400 focus:outline-none mr-2" title="Toggle dark mode">
                         <svg id="dark-mode-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.66 5.66l-.71-.71M4.05 4.05l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </button>
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                     @auth
                         <!-- Cart Icon -->
                         <a href="{{ route('cart.index') }}" class="relative text-white hover:text-blue-200">
@@ -70,10 +77,17 @@
                         </a>
                         
                         <div class="relative">
+<<<<<<< HEAD
                             <button id="profile-btn" class="flex text-sm rounded-full text-white focus:outline-none">
                                 <i class="fas fa-user-circle text-2xl"></i>
                             </button>
                             <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+=======
+                            <button class="flex text-sm rounded-full text-white focus:outline-none">
+                                <i class="fas fa-user-circle text-2xl"></i>
+                            </button>
+                            <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                                 <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                                 <a href="{{ route('my-listings.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Listings</a>
                                 <a href="{{ route('cart.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -118,9 +132,13 @@
 
     <!-- Main Content -->
     <main>
+<<<<<<< HEAD
         <div class="max-w-7xl mx-auto px-4">
             @yield('content')
         </div>
+=======
+        @yield('content')
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     </main>
 
     <!-- Footer -->
@@ -172,22 +190,35 @@
     <script>
         // Simple dropdown toggle
         document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
             const userButton = document.getElementById('profile-btn');
             const dropdown = document.getElementById('profile-dropdown');
             
             if (userButton && dropdown) {
                 userButton.addEventListener('click', function(event) {
                     event.stopPropagation();
+=======
+            const userButton = document.querySelector('button.flex.text-sm');
+            const dropdown = document.querySelector('.hidden.absolute');
+            
+            if (userButton && dropdown) {
+                userButton.addEventListener('click', function() {
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                     dropdown.classList.toggle('hidden');
                 });
                 
                 document.addEventListener('click', function(event) {
+<<<<<<< HEAD
                     if (!userButton.contains(event.target) && !dropdown.contains(event.target)) {
+=======
+                    if (!userButton.contains(event.target)) {
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                         dropdown.classList.add('hidden');
                     }
                 });
             }
         });
+<<<<<<< HEAD
 
         // Dark mode toggle logic
         document.addEventListener('DOMContentLoaded', function() {
@@ -210,6 +241,8 @@
                 }
             });
         });
+=======
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
     </script>
     
     @stack('scripts')

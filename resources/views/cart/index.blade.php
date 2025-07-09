@@ -5,7 +5,20 @@
 @section('content')
 <div class="container mx-auto px-6 py-8">
     <!-- Header -->
+<<<<<<< HEAD
     <div class="flex items-center justify-between mb-8">
+=======
+    <div class="flex items                    <div class="space-y-3">
+                        <a href="{{ route('checkout.index') }}" 
+                           class="checkout-button block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium">
+                            Proceed to Checkout
+                        </a>
+                        <a href="{{ route('listings.index') }}" 
+                           class="block w-full text-center border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-4 rounded-lg">
+                            Continue Shopping
+                        </a>
+                    </div>ustify-between mb-8">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
         <div>
             <h1 class="text-3xl font-bold text-gray-800">Shopping Cart</h1>
             <p class="text-gray-600">Review your items before checkout</p>

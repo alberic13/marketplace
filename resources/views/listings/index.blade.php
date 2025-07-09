@@ -90,9 +90,15 @@
     </div>
 
     <!-- Listings Grid -->
+<<<<<<< HEAD
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($listings as $listing)
             <div class="listing-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition duration-200">
+=======
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @forelse($listings as $listing)
+            <div class="listing-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 <!-- Listing Header -->
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-3">
@@ -156,6 +162,7 @@
                 </div>
             </div>
         @empty
+<<<<<<< HEAD
             <div class="col-span-full text-center py-16">
                 <img src="/public/build/assets/app-logo-icon-Bqx0jWkV.svg" alt="No Listings" class="mx-auto h-16 mb-4 opacity-60">
                 <h3 class="text-xl font-semibold text-gray-600 mb-2">No listings found</h3>
@@ -166,6 +173,20 @@
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+=======
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No listings found</h3>
+                <p class="text-gray-500 mb-4">Try adjusting your search criteria or create your own listing</p>
+                @auth
+                    <a href="{{ route('my-listings.create') }}" 
+                       class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+                        Create Listing
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" 
+                       class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200">
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                         Login to Create Listing
                     </a>
                 @endauth
@@ -201,8 +222,12 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch(this.action, {
                 method: 'POST',
                 headers: {
+<<<<<<< HEAD
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     'Accept': 'application/json'
+=======
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+>>>>>>> 7e327ca25780d6043a71a16d2ba1e325c59e1d84
                 },
                 body: new FormData(this)
             })
