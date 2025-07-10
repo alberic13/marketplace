@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -26,7 +27,7 @@ Route::post('/my-listings/create', [AccountController::class, 'store'])->name('m
 // Auth Required Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return view('dashboard');
+        return Inertia::render('dashboard');
     })->name('dashboard');
     
     // Cart Management
