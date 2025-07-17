@@ -6,6 +6,7 @@ use App\Models\Listing;
 use App\Models\Game;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ListingController extends Controller
 {
@@ -44,9 +45,8 @@ class ListingController extends Controller
         $listings = $query->latest()->paginate(12);
         $categories = Category::where('is_active', true)->get();
 
-        return view('listings.index', [
+        return Inertia::render('listings/Index', [
             'listings' => $listings,
-            'categories' => $categories,
             'filters' => $request->only(['type', 'condition', 'min_price', 'max_price', 'search'])
         ]);
     }

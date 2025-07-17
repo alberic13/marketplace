@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class GameController extends Controller
 {
@@ -35,10 +36,12 @@ class GameController extends Controller
         $games = $query->paginate(12);
         $categories = Category::where('is_active', true)->get();
 
-        return view('games.index', [
+        return Inertia::render('games/Index', [
             'games' => $games,
             'categories' => $categories,
-            'filters' => $request->only(['category', 'platform', 'search'])
+            'search' => $request->input('search', ''),
+            'category' => $request->input('category', ''),
+            'platform' => $request->input('platform', ''),
         ]);
     }
 
@@ -61,16 +64,46 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Game $game)
+    public function show(Game $game, Request $request)
     {
         $game->load('category');
-        $listings = $game->listings()
-            ->where('status', 'active')
-            ->with('user')
-            ->latest()
-            ->paginate(10);
+        $game->loadCount('listings');
 
-        return view('games.show', [
+        $query = $game->listings()
+            ->where('status', 'active')
+            ->with(['game', 'user']);
+
+        // Apply filters
+        if ($request->has('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('condition')) {
+            $query->where('condition', $request->condition);
+        }
+
+        // Apply sorting
+        switch ($request->get('sort', 'newest')) {
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'popular':
+                $query->orderBy('views', 'desc');
+                break;
+            default:
+                $query->latest();
+                break;
+        }
+
+        $listings = $query->paginate(12);
+
+        return \Inertia\Inertia::render('games/Show', [
             'game' => $game,
             'listings' => $listings
         ]);

@@ -22,6 +22,21 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Games',
+        href: '/games',
+        icon: BookOpen,
+    },
+    {
+        title: 'Listings',
+        href: '/listings',
+        icon: Folder,
+    },
+    {
+        title: 'Categories',
+        href: '/categories',
+        icon: Folder,
+    },
 ];
 
 const rightNavItems: NavItem[] = [
@@ -95,17 +110,17 @@ export function AppHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItem[]
                             <NavigationMenuList className="flex h-full items-stretch space-x-2">
                                 {mainNavItems.map((item, index) => (
                                     <NavigationMenuItem key={index} className="relative flex h-full items-center">
-                                        <Link
-                                            href={item.href}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                url === item.href && activeItemStyles,
-                                                'h-9 cursor-pointer px-3',
-                                            )}
-                                        >
-                                            {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
-                                            {item.title}
-                                        </Link>
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    navigationMenuTriggerStyle(),
+                                                    url === item.href && activeItemStyles,
+                                                    'h-9 cursor-pointer px-3 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-zinc-700 hover:shadow-sm hover:text-primary',
+                                                )}
+                                            >
+                                                {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
+                                                {item.title}
+                                            </Link>
                                         {url === item.href && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                         )}

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Game;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,7 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('home', [
+        return Inertia::render('Home', [
             'categories' => $categories,
             'featuredGames' => $featuredGames,
             'recentListings' => $recentListings

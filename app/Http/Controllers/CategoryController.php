@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
             }])
             ->paginate(12);
 
-        return view('categories.index', [
+        return \Inertia\Inertia::render('categories/Index', [
             'categories' => $categories
         ]);
     }
@@ -44,7 +45,7 @@ class CategoryController extends Controller
                 $q->where('status', 'active');
             }])->get();
 
-            return view('categories.show', [
+            return \Inertia\Inertia::render('categories/Show', [
                 'category' => $category,
                 'games' => $games,
                 'listings' => collect(),
@@ -97,7 +98,7 @@ class CategoryController extends Controller
             $listings = $query->paginate(12);
             $totalListings = $category->listings()->where('status', 'active')->count();
 
-            return view('categories.show', [
+            return \Inertia\Inertia::render('categories/Show', [
                 'category' => $category,
                 'listings' => $listings,
                 'totalListings' => $totalListings

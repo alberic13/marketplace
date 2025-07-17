@@ -30,6 +30,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     
+    Route::get('/profile', function () {
+        return Inertia::render('Profile');
+    })->name('profile');
+    
     // Cart Management
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
